@@ -15,13 +15,11 @@ def db_query(text):
                                     cursorclass=pymysql.cursors.DictCursor)
         try:
             with connection.cursor() as cursor:
-                sql = "SELECT * FROM `{0}`.`{1}` WHERE `text` LIKE '%{2}%'".format('db_something', 'stable', text)
-                print (sql)
+                sql = "DELETE FROM `{0}`.`{1}` WHERE `id` = {2}".format('db_something', 'stable', text)
                 cursor.execute(sql)
                 rows = cursor.fetchall()
-                for row in rows:
-                    print("<p>" + str(row) + "</p>")
-            connection.commit()
+                connection.commit()
+                print("Item by id '{0}' deleted".format(text))
         finally:
             connection.close()
     except pymysql.err.OperationalError:
