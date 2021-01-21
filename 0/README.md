@@ -19,3 +19,6 @@ DELETE запрос - DELETE FROM `db_something`.`atable` WHERE id = 1<br>
 <h2>Описание</h2><br>
   Сервис имеет 2 страницы: <br> "Search" - на ней можно сделать поиск в базе данных<br>
                             "Delete" - она позволяет удалить строку из базы по ID<br>
+                            
+<h2>Unittest</h2><br>
+В папке unittest есть маленький unittest функции подключения 
