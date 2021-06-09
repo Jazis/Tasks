@@ -72,7 +72,11 @@ namespace use_case
                 if (radioButton2.Checked == true) { platform = "telephony"; creating(platform); }
                 if (radioButton5.Checked == true) { platform = "core"; creating(platform); }
                 if (radioButton6.Checked == true) { platform = "robocall"; creating(platform); }
-                else { MessageBox.Show("Platform not selected!"); }
+                if (radioButton1.Checked == false &
+                    radioButton2.Checked == false &
+                    radioButton5.Checked == false &
+                    radioButton6.Checked == false)
+                 { MessageBox.Show("Platform not selected!"); }
             }
             if (radioButton4.Checked == true)
             {
@@ -121,11 +125,6 @@ namespace use_case
         {
             Form2 form2 = new Form2();
             form2.Show();
-        }
-
-        private void cLEARToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            textBox1.Clear();
         }
 
         private void button7_Click(object sender, EventArgs e)
