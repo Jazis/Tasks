@@ -25,14 +25,14 @@ namespace use_case
 
         public void creating()
         {
-            textBox2.Text = "# language: ru" + Environment.NewLine + textBox1.Text.Replace("Feature", "Функционал")
+            richTextBox1.Text = "# language: ru" + Environment.NewLine + textBox1.Text.Replace("Feature", "Функционал")
                                                                 .Replace("Background", "Контекст").Replace("When", "Если")
                                                                 .Replace("Then", "Тогда").Replace("Scenario", $"@allure.label.framework:behat{Environment.NewLine}  @allure.label.feature:vpbx{Environment.NewLine}  Сценарий")
                                                                 .Replace("Given", "Также").Replace("  And", "  И")
                                                                 .Replace("@visual", "@визуал").Replace("@functional", "@функционал");
             foreach (string elem in listBox1.Items)
             {
-                textBox2.Text = textBox2.Text.Replace(elem.Split('|')[0], elem.Split('|')[1]);
+                richTextBox1.Text = richTextBox1.Text.Replace(elem.Split('|')[0], elem.Split('|')[1]);
             }
         }
 
@@ -40,10 +40,10 @@ namespace use_case
         {
             string functionName0 = textBox1.Text.Split('(')[0];
             string functionName1 = functionName0.Split(' ')[functionName0.Split(' ').Length-1];
-            textBox2.Text += "public function " + functionName1 + "(TableNode $table)\n{\n";
+            richTextBox1.Text += "public function " + functionName1 + "(TableNode $table)\n{\n";
             int counter = 0;
-            textBox2.Text += "\t$tableRows = $table->getHash();\n";
-            textBox2.Text += "\t$substeps = [\n";
+            richTextBox1.Text += "\t$tableRows = $table->getHash();\n";
+            richTextBox1.Text += "\t$substeps = [\n";
             foreach (string line in textBox1.Text.Split('\n'))
             {
                 if (line.Contains(';') & line.Contains('(') & ! 
@@ -51,20 +51,19 @@ namespace use_case
                     line.Contains("$lines = $assertion->getStrings();")
                     )
                 {
-                    textBox2.Text += "\t\t" + counter + " => function () {\n";
-                    textBox2.Text += "\t\t\t" + line + "\n";
-                    textBox2.Text += "\t\t},\n";
+                    richTextBox1.Text += "\t\t" + counter + " => function () {\n";
+                    richTextBox1.Text += "\t\t\t" + line + "\n";
+                    richTextBox1.Text += "\t\t},\n";
                     counter++;
                 }
             }
-            textBox2.Text += "\t$this->executeSubstepsFromDataTable($tableRows, $substeps);";
-            textBox2.Text += "\n}";
-
+            richTextBox1.Text += "\t$this->executeSubstepsFromDataTable($tableRows, $substeps);";
+            richTextBox1.Text += "\n}";
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            richTextBox1.Clear();
             if (radioButton3.Checked == true)
             {
                 test0 = textBox1.Text;
@@ -76,7 +75,7 @@ namespace use_case
             }
             if (File.Exists(historyDirectory) == false) { File.Create(historyDirectory).Close(); }
             using (StreamWriter streamWriter = new StreamWriter(historyDirectory))
-                streamWriter.Write(textBox1.Text + "\n\n----------------------------------------------\n\n" + textBox2.Text + "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
+                streamWriter.Write(textBox1.Text + "\n\n----------------------------------------------\n\n" + richTextBox1.Text + "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -93,7 +92,6 @@ namespace use_case
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            radioButton1.Checked = true;
             radioButton3.Checked = true;
             foreach (string elem in File.ReadAllLines("binds.txt"))
                 listBox1.Items.Add(elem);
@@ -118,28 +116,6 @@ namespace use_case
         {
             Form2 form2 = new Form2();
             form2.Show();
-        }
-
-        private void textBox1_MouseDown(object sender, MouseEventArgs e)
-        {
-
-            if (e.Button == MouseButtons.Right)
-            {
-                if (radioButton1.Checked == true) { textBox1.ContextMenuStrip = null; }
-                if (radioButton2.Checked == true) { textBox1.ContextMenuStrip = contextMenuStrip1; contextMenuStrip1.Show(this.textBox1, e.Location); }
-
-            }
-        }
-
-        private void textBox2_MouseDown(object sender, MouseEventArgs e)
-        {
-
-            if (e.Button == MouseButtons.Right)
-            {
-                if (radioButton1.Checked == true) { textBox2.ContextMenuStrip = null; }
-                if (radioButton2.Checked == true) { textBox2.ContextMenuStrip = contextMenuStrip1; contextMenuStrip1.Show(this.textBox2, e.Location); }
-
-            }
         }
 
         private void cLEARToolStripMenuItem_Click(object sender, EventArgs e)
