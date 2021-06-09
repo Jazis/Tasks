@@ -1,30 +1,77 @@
-    public function shouldBeVisibleChangesForSip($assertion)
-    {
-        $lines = $assertion->getStrings();
+# language: ru
+Функционал: Оборудование
+"""
+%suite Телефония
+%group Настройка оборудования
+"""
 
-        // -> убедиться, что уведомление об успешной работе отобразилось 
-        $substep1 = function () {
-            $this->verifyThatElementIsVisibleWithoutWaitingAJAX(Page::NOTIFICATION_REACT);
-        };
+  Контекст:
+    Также выбран аккаунт "9130"
+    И открыта Телефония
+    * открыто Оборудование
 
-        $substeps = array(
-            $lines[2] => $substep1
-        );
+  @allure.label.framework:behat
+  @allure.label.feature:Telephony
+  @визуал
+  Сценарий: Должны отображаться ссылки с инструкциями по установке
 
-        $this->executeSubsteps($substeps);
-    }
+    Тогда должны отображаться ссылки с инструкциями по установке
+    """
+    ASSERTION
+
+    -> убедиться, что все ссылки отображаются
+    """
+
+  @allure.label.framework:behat
+  @allure.label.feature:Telephony
+  @визуал
+  Сценарий: Должны отображаться все записи
+
+    Тогда должны отображаться все записи
+    """
+    ASSERTION
+
+    -> убедиться, что первая запись отображается
+    """
 
 ----------------------------------------------
 
-public function shouldBeVisibleChangesForSip(TableNode $table)
-{
-	$tableRows = $table->getHash();
-	$substeps = [
-		0 => function () {
-			            $this->verifyThatElementIsVisibleWithoutWaitingAJAX(Page::NOTIFICATION_REACT);
-		},
-	$this->executeSubstepsFromDataTable($tableRows, $substeps);
-}
+# language: ru
+# language: ru
+Функционал: Оборудование
+"""
+%suite Телефония
+%group Настройка оборудования
+"""
+
+  Контекст:
+    Также выбран аккаунт "9130"
+    И открыта Телефония
+    * открыто Оборудование
+
+  @allure.label.framework:behat
+  @allure.label.feature:Telephony
+  @визуал
+  Сценарий: Должны отображаться ссылки с инструкциями по установке
+
+    Тогда должны отображаться ссылки с инструкциями по установке
+    """
+    ASSERTION
+
+    -> убедиться, что все ссылки отображаются
+    """
+
+  @allure.label.framework:behat
+  @allure.label.feature:Telephony
+  @визуал
+  Сценарий: Должны отображаться все записи
+
+    Тогда должны отображаться все записи
+    """
+    ASSERTION
+
+    -> убедиться, что первая запись отображается
+    """
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

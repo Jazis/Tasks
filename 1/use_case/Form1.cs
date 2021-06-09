@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
 using System.IO;
+using System.Threading;
 
 namespace use_case
 {
@@ -23,11 +24,11 @@ namespace use_case
             InitializeComponent();
         }
 
-        public void creating()
-        {
+        public void creating(string platform)
+        {   
             richTextBox1.Text = "# language: ru" + Environment.NewLine + textBox1.Text.Replace("Feature", "Функционал")
                                                                 .Replace("Background", "Контекст").Replace("When", "Если")
-                                                                .Replace("Then", "Тогда").Replace("Scenario", $"@allure.label.framework:behat{Environment.NewLine}  @allure.label.feature:vpbx{Environment.NewLine}  Сценарий")
+                                                                .Replace("Then", "Тогда").Replace("Scenario", $"@allure.label.framework:behat{Environment.NewLine}  @allure.label.feature:{platform}{Environment.NewLine}  Сценарий")
                                                                 .Replace("Given", "Также").Replace("  And", "  И")
                                                                 .Replace("@visual", "@визуал").Replace("@functional", "@функционал");
             foreach (string elem in listBox1.Items)
@@ -66,8 +67,12 @@ namespace use_case
             richTextBox1.Clear();
             if (radioButton3.Checked == true)
             {
-                test0 = textBox1.Text;
-                creating();
+                string platform = "";
+                if (radioButton1.Checked == true) { platform = "vpbx"; creating(platform); }
+                if (radioButton2.Checked == true) { platform = "telephony"; creating(platform); }
+                if (radioButton5.Checked == true) { platform = "core"; creating(platform); }
+                if (radioButton6.Checked == true) { platform = "robocall"; creating(platform); }
+                else { MessageBox.Show("Platform not selected!"); }
             }
             if (radioButton4.Checked == true)
             {
