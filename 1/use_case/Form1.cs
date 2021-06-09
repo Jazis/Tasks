@@ -38,29 +38,26 @@ namespace use_case
 
         public void oldTestsTransformer()
         {
-            List<string> code = new List<string>();
             string functionName0 = textBox1.Text.Split('(')[0];
             string functionName1 = functionName0.Split(' ')[functionName0.Split(' ').Length-1];
-            code.Add("public function " + functionName1 + "(TableNode $table)\n{\n");
             textBox2.Text += "public function " + functionName1 + "(TableNode $table)\n{\n";
             int counter = 0;
-            code.Add("\t$tableRows = $table->getHash();\n");
             textBox2.Text += "\t$tableRows = $table->getHash();\n";
             textBox2.Text += "\t$substeps = [\n";
-            code.Add("\t$substeps = [\n");
             foreach (string line in textBox1.Text.Split('\n'))
             {
-                if (line.Contains(';'))
+                if (line.Contains(';') & line.Contains('(') & ! 
+                    line.Contains("substeps") &!
+                    line.Contains("$lines = $assertion->getStrings();")
+                    )
                 {
                     textBox2.Text += "\t\t" + counter + " => function () {\n";
                     textBox2.Text += "\t\t\t" + line + "\n";
-                    textBox2.Text += "\t\t}";
-                    code.Add("\t\t" + counter + " => function () {\n");
-                    code.Add("\t\t\t" + line + "\n");
-                    code.Add("\t\t},");
+                    textBox2.Text += "\t\t},\n";
                     counter++;
                 }
             }
+            textBox2.Text += "\t$this->executeSubstepsFromDataTable($tableRows, $substeps);";
             textBox2.Text += "\n}";
 
         }

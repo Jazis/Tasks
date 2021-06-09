@@ -1,39 +1,30 @@
-public function testVatsExist()
+    public function shouldBeVisibleChangesForSip($assertion)
     {
-        $this->verifyVisibilityOfCssSelector('#topbar_right');
-        $this->verifyElementPresent('9130', 'data-account-number');
-        $this->verifyElementPresent('current-vpbx_select', 'id'); // Проверка выпадающего списка ВАТС для счета, у которого есть ВАТС
-        $this->verifyValueOfElement('1', 'current-vpbx_select', 'id');
-        $this->clickOnCssSelector('.topbar-menu-phone');
-        $this->verifyNoElementPresent('current-vpbx_select', 'id'); // Проверка отсутствия выпадающего списка ВАТС для Телефонии
-        $this->clickOnCssSelector('.topbar-menu-lk');
-        $this->verifyNoElementPresent('current-vpbx_select', 'id'); // Проверка отсутствия выпадающего списка ВАТС для ЛК
+        $lines = $assertion->getStrings();
+
+        // -> убедиться, что уведомление об успешной работе отобразилось 
+        $substep1 = function () {
+            $this->verifyThatElementIsVisibleWithoutWaitingAJAX(Page::NOTIFICATION_REACT);
+        };
+
+        $substeps = array(
+            $lines[2] => $substep1
+        );
+
+        $this->executeSubsteps($substeps);
     }
 
 ----------------------------------------------
 
-public function testVatsExist(TableNode $table)
+public function shouldBeVisibleChangesForSip(TableNode $table)
 {
 	$tableRows = $table->getHash();
 	$substeps = [
 		0 => function () {
-			        $this->verifyVisibilityOfCssSelector('#topbar_right');
-		}		1 => function () {
-			        $this->verifyElementPresent('9130', 'data-account-number');
-		}		2 => function () {
-			        $this->verifyElementPresent('current-vpbx_select', 'id'); // Проверка выпадающего списка ВАТС для счета, у которого есть ВАТС
-		}		3 => function () {
-			        $this->verifyValueOfElement('1', 'current-vpbx_select', 'id');
-		}		4 => function () {
-			        $this->clickOnCssSelector('.topbar-menu-phone');
-		}		5 => function () {
-			        $this->verifyNoElementPresent('current-vpbx_select', 'id'); // Проверка отсутствия выпадающего списка ВАТС для Телефонии
-		}		6 => function () {
-			        $this->clickOnCssSelector('.topbar-menu-lk');
-		}		7 => function () {
-			        $this->verifyNoElementPresent('current-vpbx_select', 'id'); // Проверка отсутствия выпадающего списка ВАТС для ЛК
-		}
+			            $this->verifyThatElementIsVisibleWithoutWaitingAJAX(Page::NOTIFICATION_REACT);
+		},
+	$this->executeSubstepsFromDataTable($tableRows, $substeps);
 }
 
-================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
